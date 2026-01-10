@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenAccessibility – Maintenance</title>
-    <meta name="description" content="We are currently undergoing scheduled maintenance.">
-    <meta name="robots" content="noindex, nofollow">
+    <title>OpenAccessibility – Digital Access</title>
+    <meta name="description" content="Making the web accessible for everyone.">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -19,7 +18,7 @@
 
     <style>
         :root {
-            /* Brutalist Design Tokens matching index.html */
+            /* Brutalist Design Tokens */
             --border-width: 2px;
             --color-black: #080808;
             --color-white: #ffffff;
@@ -35,8 +34,89 @@
             overflow-x: hidden;
         }
 
+        /* View Switching Logic */
+        .view-section {
+            display: none;
+            min-height: 100vh;
+            padding-top: 80px; /* Space for fixed header */
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .view-section.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography & Layout */
+        .text-huge {
+            font-size: clamp(3rem, 9vw, 7rem);
+            line-height: 0.9;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+        }
+
         .border-thick {
             border: var(--border-width) solid var(--color-black);
+        }
+
+        .border-b-thick { border-bottom: var(--border-width) solid var(--color-black); }
+        .border-t-thick { border-top: var(--border-width) solid var(--color-black); }
+        .border-l-thick { border-left: var(--border-width) solid var(--color-black); }
+        .border-r-thick { border-right: var(--border-width) solid var(--color-black); }
+
+        /* Navigation Components */
+        .nav-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            border-bottom: var(--border-width) solid var(--color-black);
+        }
+
+        /* 2-Line Hamburger Menu */
+        .hamburger-lines {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 2rem;
+            height: 0.8rem; /* Tighter height for 2 lines */
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .hamburger-lines span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: var(--color-black);
+            transition: all 0.3s ease;
+        }
+
+        /* Menu Overlay */
+        #mobile-menu {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: calc(100vh - 80px);
+            background: white;
+            z-index: 99;
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-top: var(--border-width) solid var(--color-black);
+            overflow-y: auto;
+        }
+
+        #mobile-menu.open {
+            transform: translateX(0);
         }
 
         /* Interactive Elements */
@@ -48,149 +128,1276 @@
             box-shadow: 6px 6px 0px var(--color-black);
         }
 
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            border: var(--border-width) solid var(--color-black);
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .image-container:hover img {
+            transform: scale(1.05);
+        }
+
         /* Abstract Patterns */
         .pattern-grid {
             background-image: radial-gradient(var(--color-black) 1px, transparent 1px);
             background-size: 20px 20px;
         }
+        
+        /* Tool Styles */
+        .tool-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--color-black);
+            font-family: 'Inter', sans-serif;
+            font-size: 1.125rem;
+            outline: none;
+            background: #f8f8f8;
+            color: var(--color-black);
+        }
+        .tool-input:focus {
+            background: #fff;
+            border-color: var(--color-accent);
+        }
+        
+        /* Prose overrides */
+        .prose p {
+            margin-bottom: 1.5rem;
+            line-height: 1.75;
+            font-size: 1.125rem;
+            color: var(--color-body);
+        }
+        .prose h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--color-black);
+        }
+        .prose ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-body);
+        }
+        .prose li {
+            margin-bottom: 0.5rem;
+        }
+        .prose strong {
+            font-weight: 700;
+            color: var(--color-black);
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body>
 
-    <!-- Header / Navigation (Simplified for Maintenance) -->
-    <header class="px-6 py-4 flex justify-between items-center h-[80px] border-b-2 border-black bg-white z-10 relative">
+    <!-- Header / Navigation -->
+    <header class="nav-fixed px-6 py-4 flex justify-between items-center h-[80px]">
         <!-- Logo -->
-        <div class="flex items-center gap-3">
+        <a href="#home" onclick="router('home')" class="flex items-center gap-3 hover:opacity-70 transition-opacity group">
             <img src="https://ddigrcfuoxzmmuqyezfg.supabase.co/storage/v1/object/public/I/logo.svg" 
-                 alt="OpenAccessibility Logo" 
+                 alt="OpenAccessibility" 
                  class="h-10 w-auto">
             <div class="flex flex-col leading-none">
                 <span class="text-xl font-black tracking-tighter text-black uppercase">Open</span>
                 <span class="text-xl font-black tracking-tighter text-[#4CA6FE] uppercase">Accessibility</span>
             </div>
-        </div>
+        </a>
+
+        <!-- 2-Line Hamburger Menu -->
+        <button class="hamburger-lines hover:opacity-60" onclick="toggleMenu()" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+        </button>
     </header>
 
-    <!-- Main Content -->
-    <main class="flex-grow flex flex-col items-center justify-center relative p-6 space-y-8">
-        <!-- Background Pattern -->
-        <div class="absolute inset-0 pattern-grid opacity-20 z-0"></div>
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="flex flex-col">
+        <nav class="flex-grow flex flex-col justify-center items-center gap-6 text-3xl font-bold uppercase tracking-widest p-8">
+            <a href="#home" onclick="navigate('home')" class="hover:underline decoration-4 underline-offset-4 decoration-[#4CA6FE]">Home</a>
+            <a href="#about" onclick="navigate('about')" class="hover:underline decoration-4 underline-offset-4 decoration-[#4CA6FE]">About</a>
+            <a href="#services" onclick="navigate('services')" class="hover:underline decoration-4 underline-offset-4 decoration-[#4CA6FE]">Services</a>
+            <a href="#tools" onclick="navigate('tools')" class="hover:underline decoration-4 underline-offset-4 decoration-[#4CA6FE]">Tools</a>
+            <a href="#articles" onclick="navigate('articles')" class="hover:underline decoration-4 underline-offset-4 decoration-[#4CA6FE]">Articles</a>
+            <a href="#contact" onclick="navigate('contact')" class="hover:underline decoration-4 underline-offset-4 decoration-[#4CA6FE]">Contact</a>
+        </nav>
+        <div class="p-6 border-t-thick bg-blue-50 text-center font-mono text-sm">
+            Est. 2024 &bull; OpenAccessibility
+        </div>
+    </div>
 
-        <div class="bg-white border-thick p-8 md:p-12 max-w-2xl w-full relative z-10 shadow-[8px_8px_0px_#080808] text-center">
-            
-            <div class="w-20 h-20 bg-blue-50 border-thick rounded-full flex items-center justify-center mx-auto mb-8 text-[#4CA6FE]">
-                <i data-lucide="wrench" class="w-10 h-10"></i>
-            </div>
+    <!-- ===== MAIN CONTENT VIEWS (20+ PAGES) ===== -->
 
-            <h1 class="text-4xl md:text-5xl font-black mb-6 text-black">Under Maintenance</h1>
-            
-            <p class="text-lg md:text-xl text-[#585858] leading-relaxed mb-8">
-                OpenAccessibility is currently undergoing scheduled improvements to enhance your experience. We expect to be back online shortly.
-            </p>
-
-            <div class="bg-[#f0f9ff] border-thick p-6 mb-8 text-left">
-                <h2 class="font-bold text-lg mb-2 flex items-center gap-2">
-                    <i data-lucide="info" class="w-5 h-5 text-[#4CA6FE]"></i> Status Update
-                </h2>
-                <p class="text-sm text-[#585858]">
-                    We are deploying a new update for our WCAG audit tools. Estimated downtime: <strong>2 hours</strong>.
+    <!-- 1. HOME -->
+    <div id="view-home" class="view-section active">
+        <div class="grid grid-cols-1 lg:grid-cols-2 flex-grow">
+            <!-- Left Content -->
+            <div class="flex flex-col justify-center p-8 lg:p-16 border-r-thick lg:border-b-0 border-b-thick bg-white relative">
+                <!-- Abstract Spinner Decoration -->
+                <svg class="absolute top-12 right-12 w-24 h-24 text-black opacity-5 animate-spin-slow" viewBox="0 0 100 100" style="animation: spin 20s linear infinite;">
+                    <path d="M50 0 L100 50 L50 100 L0 50 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                
+                <h1 class="text-huge mb-6 text-black">
+                    Access<br>
+                    <span class="text-[#4CA6FE]">ForAll</span>
+                </h1>
+                
+                <p class="text-xl lg:text-2xl font-medium max-w-md mb-8 text-[#585858]">
+                    Empowering organizations to build digital experiences that everyone can use. We bridge the gap between design and disability.
                 </p>
+                
+                <div class="mt-auto">
+                    <button onclick="navigate('contact')" class="hover-lift bg-black text-white px-8 py-4 text-xl font-bold uppercase tracking-widest border-2 border-black inline-flex items-center gap-4">
+                        Get Audited <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Right Content / Visual -->
+            <div class="relative bg-gray-50 flex items-center justify-center p-8 pattern-grid">
+                <div class="image-container w-full max-w-md aspect-[3/4] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] bg-white flex items-center justify-center relative">
+                    <!-- High-End Abstract Illustration -->
+                    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-full p-8">
+                        <circle cx="200" cy="200" r="150" fill="#f0f9ff" stroke="#080808" stroke-width="3"/>
+                        <rect x="100" y="150" width="200" height="100" rx="10" fill="white" stroke="#080808" stroke-width="3"/>
+                        <circle cx="130" cy="180" r="10" fill="#4CA6FE"/>
+                        <circle cx="160" cy="180" r="10" fill="#080808"/>
+                        <circle cx="190" cy="180" r="10" fill="#080808"/>
+                        <path d="M120 220 H280" stroke="#080808" stroke-width="3" stroke-linecap="round"/>
+                        <!-- Floating badge -->
+                        <g transform="translate(250, 100)">
+                            <rect width="60" height="60" rx="30" fill="#4CA6FE" stroke="#080808" stroke-width="3"/>
+                            <path d="M20 30 L28 38 L40 22" stroke="white" stroke-width="4" fill="none"/>
+                        </g>
+                    </svg>
+                    <div class="absolute inset-0 bg-[#4CA6FE] mix-blend-multiply opacity-5 pointer-events-none"></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+
+    <!-- 2. ABOUT / MISSION -->
+    <div id="view-about" class="view-section">
+        <div class="max-w-7xl mx-auto flex-grow w-full">
+            <div class="p-8 lg:p-24 border-b-thick bg-blue-50">
+                <h2 class="text-4xl lg:text-6xl font-black mb-6 leading-tight uppercase">Inclusive Design</h2>
+                <p class="text-xl lg:text-3xl font-medium max-w-4xl text-[#585858]">To dismantle digital barriers through technical excellence and empathy. We strive to create a web that works perfectly for screen readers, keyboard-only users, and those with cognitive differences.</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2">
+                <div class="p-8 lg:p-16 border-b-thick lg:border-b-0 lg:border-r-thick bg-white">
+                    <div class="flex items-center gap-4 mb-8">
+                         <i class="fa-solid fa-users text-5xl text-[#4CA6FE]"></i>
+                         <h3 class="text-2xl font-bold uppercase tracking-widest">Our Mission</h3>
+                    </div>
+                    <p class="text-lg leading-relaxed mb-6">OpenAccessibility was founded on the belief that the internet is a fundamental human right. Access to information shouldn't be limited by ability.</p>
+                    <p class="text-lg leading-relaxed mb-8">Our team consists of certified CPACC auditors, native screen reader users, and expert developers who understand the code behind the compliance.</p>
+                    
+                    <div class="grid grid-cols-2 gap-4 mt-8">
+                        <div class="border-thick p-4 text-center hover-lift">
+                            <span class="block text-3xl font-black text-[#4CA6FE]">500+</span>
+                            <span class="text-xs font-bold uppercase">Audits</span>
+                        </div>
+                        <div class="border-thick p-4 text-center hover-lift">
+                            <span class="block text-3xl font-black text-[#4CA6FE]">100%</span>
+                            <span class="text-xs font-bold uppercase">Compliance</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="image-container h-[400px] lg:h-auto border-b-thick lg:border-b-0 bg-[#080808] flex items-center justify-center">
+                    <!-- Abstract Team SVG -->
+                    <svg viewBox="0 0 200 200" class="w-64 h-64 text-white">
+                        <path d="M100 20 L20 180 H180 Z" stroke="#4CA6FE" stroke-width="2" fill="none"/>
+                        <circle cx="100" cy="100" r="40" fill="white"/>
+                        <circle cx="100" cy="100" r="10" fill="#080808"/>
+                        <path d="M60 140 Q100 180 140 140" stroke="#080808" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="mailto:cs.access@tuta.io" class="inline-block bg-black text-white px-8 py-4 font-bold uppercase hover:bg-[#4CA6FE] hover:text-black transition-colors border-2 border-black hover-lift">
-                    Contact Support
+            <!-- Founder / Leadership Section -->
+            <div class="border-t-thick p-8 lg:p-16 bg-[#f0f9ff]">
+                <h3 class="text-4xl font-black mb-12 uppercase text-black">Leadership</h3>
+                <div class="max-w-3xl">
+                    <div class="bg-white border-thick p-8 md:p-10 flex flex-col md:flex-row items-center gap-8 hover-lift shadow-[8px_8px_0px_#080808]">
+                        <div class="w-32 h-32 bg-gray-100 border-thick rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
+                            <i class="fa-solid fa-user-tie text-5xl text-[#080808]"></i>
+                        </div>
+                        <div class="text-center md:text-left flex-grow">
+                            <h4 class="text-3xl font-black text-[#080808] mb-2">Arun Ammisetty</h4>
+                            <p class="font-mono text-sm text-[#4CA6FE] font-bold uppercase tracking-widest mb-4">Founder & Lead Accessibility Architect</p>
+                            <p class="text-[#585858] mb-6 leading-relaxed">Dedicated to building a more inclusive digital future. Leading the charge in web accessibility standards and compliance strategies.</p>
+                            <a href="https://www.linkedin.com/in/arun-ammisetty/" target="_blank" class="inline-flex items-center gap-2 bg-black text-white px-6 py-3 font-bold hover:bg-[#4CA6FE] transition-colors border-2 border-black">
+                                <i class="fa-brands fa-linkedin text-xl"></i> <span>Connect on LinkedIn</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+
+    <!-- 3. SERVICES MAIN -->
+    <div id="view-services" class="view-section">
+        <div class="grid grid-cols-1 lg:grid-cols-12 flex-grow">
+            <div class="lg:col-span-1 bg-black text-white flex lg:justify-center items-center p-8 border-b-thick lg:border-b-0 lg:border-r-thick">
+                <h2 class="text-5xl lg:text-7xl font-black uppercase tracking-tighter lg:writing-vertical lg:rotate-180">Services</h2>
+            </div>
+            <div class="lg:col-span-11 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-white">
+                
+                <!-- Service 1: Audit -->
+                <a href="#service-audit" onclick="navigate('service-audit')" class="p-8 border-b-thick md:border-r-thick hover:bg-blue-50 transition-colors cursor-pointer group h-full block">
+                    <i class="fa-solid fa-magnifying-glass text-4xl mb-4 group-hover:text-[#4CA6FE]"></i>
+                    <h3 class="text-2xl font-bold mb-2">Accessibility Audits</h3>
+                    <p class="font-light text-sm mb-4 text-[#585858]">Detailed WCAG 2.2 analysis identifying failures in your UI/UX with actionable reporting.</p>
+                    <span class="text-xs font-bold border-b border-black">VIEW DETAILS</span>
+                </a>
+
+                <!-- Service 2: Remediation -->
+                <a href="#service-remediation" onclick="navigate('service-remediation')" class="p-8 border-b-thick md:border-r-thick hover:bg-blue-50 transition-colors cursor-pointer group h-full block">
+                    <i class="fa-solid fa-code text-4xl mb-4 group-hover:text-[#4CA6FE]"></i>
+                    <h3 class="text-2xl font-bold mb-2">Code Remediation</h3>
+                    <p class="font-light text-sm mb-4 text-[#585858]">Expert developers fixing ARIA, HTML structure, and keyboard navigation issues.</p>
+                    <span class="text-xs font-bold border-b border-black">VIEW DETAILS</span>
+                </a>
+
+                <!-- Service 3: Training -->
+                <a href="#service-training" onclick="navigate('service-training')" class="p-8 border-b-thick lg:border-r-0 hover:bg-blue-50 transition-colors cursor-pointer group h-full block">
+                    <i class="fa-solid fa-chalkboard-user text-4xl mb-4 group-hover:text-[#4CA6FE]"></i>
+                    <h3 class="text-2xl font-bold mb-2">Team Training</h3>
+                    <p class="font-light text-sm mb-4 text-[#585858]">Custom workshops for designers & developers to build inclusive products.</p>
+                    <span class="text-xs font-bold border-b border-black">VIEW DETAILS</span>
+                </a>
+
+                <!-- Service 4: Design -->
+                <a href="#service-design" onclick="navigate('service-design')" class="p-8 border-b-thick md:border-r-thick hover:bg-blue-50 transition-colors cursor-pointer group h-full block">
+                    <i class="fa-solid fa-pen-ruler text-4xl mb-4 group-hover:text-[#4CA6FE]"></i>
+                    <h3 class="text-2xl font-bold mb-2">Inclusive Design</h3>
+                    <p class="font-light text-sm mb-4 text-[#585858]">Creating accessible design systems, wireframes, and UI components from the start.</p>
+                    <span class="text-xs font-bold border-b border-black">VIEW DETAILS</span>
+                </a>
+
+                <!-- Service 5: Legal -->
+                <a href="#service-legal" onclick="navigate('service-legal')" class="p-8 border-b-thick md:border-r-thick hover:bg-blue-50 transition-colors cursor-pointer group h-full block">
+                    <i class="fa-solid fa-scale-balanced text-4xl mb-4 group-hover:text-[#4CA6FE]"></i>
+                    <h3 class="text-2xl font-bold mb-2">Legal Compliance</h3>
+                    <p class="font-light text-sm mb-4 text-[#585858]">Support for ADA, Section 508, EAA, and AODA documentation (VPAT/ACR).</p>
+                    <span class="text-xs font-bold border-b border-black">VIEW DETAILS</span>
+                </a>
+
+                <!-- Service 6: QA -->
+                <a href="#service-qa" onclick="navigate('service-qa')" class="p-8 border-b-thick lg:border-r-0 hover:bg-blue-50 transition-colors cursor-pointer group h-full block">
+                    <i class="fa-solid fa-list-check text-4xl mb-4 group-hover:text-[#4CA6FE]"></i>
+                    <h3 class="text-2xl font-bold mb-2">QA & Testing</h3>
+                    <p class="font-light text-sm mb-4 text-[#585858]">Integrated accessibility testing into your CI/CD pipeline and manual QA processes.</p>
+                    <span class="text-xs font-bold border-b border-black">VIEW DETAILS</span>
                 </a>
             </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
 
-            <div class="mt-8 text-sm text-[#585858]">
-                <p>Urgent inquiry? Email us at <a href="mailto:cs.access@tuta.io" class="underline hover:text-[#4CA6FE] font-bold">cs.access@tuta.io</a></p>
+    <!-- 4-9. SERVICE DETAIL PAGES -->
+    <div id="view-service-audit" class="view-section">
+        <div class="p-8 lg:p-16 border-b-thick bg-blue-50">
+            <button onclick="navigate('services')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> All Services</button>
+            <h2 class="text-4xl font-black mb-4">Accessibility Audits</h2>
+            <p class="text-xl max-w-2xl text-[#585858]">Our comprehensive audit process combines automated scanning with expert manual review to catch 100% of issues.</p>
+        </div>
+        <div class="p-8 lg:p-16 grid grid-cols-1 md:grid-cols-2 gap-8 bg-white">
+            <div class="p-6 border-thick hover-lift">
+                <h3 class="text-2xl font-bold mb-4">Automated Scanning</h3>
+                <p class="text-[#585858]">Rapid identification of common failures like low contrast, missing alt text, and broken links.</p>
+            </div>
+            <div class="p-6 border-thick hover-lift">
+                <h3 class="text-2xl font-bold mb-4">Manual Verification</h3>
+                <p class="text-[#585858]">Testing with NVDA, JAWS, and VoiceOver to ensure the actual user experience is seamless.</p>
             </div>
         </div>
+        <div class="footer-placeholder"></div>
+    </div>
 
-        <!-- Contact Form Section -->
-        <div class="bg-white border-thick p-8 md:p-10 max-w-2xl w-full relative z-10">
-             <div id="form-container">
-                 <div class="flex items-center gap-4 mb-6 justify-center">
-                     <i data-lucide="bell" class="w-8 h-8 text-[#4CA6FE]"></i>
-                     <h2 class="text-2xl font-black uppercase text-center">Get Notified</h2>
-                 </div>
-                 <p class="text-center text-[#585858] mb-6">Leave your email and we'll notify you as soon as we're back online.</p>
-                 
-                 <form onsubmit="handleNotify(event)" class="space-y-4">
-                     <div>
-                         <label class="block font-bold mb-2 uppercase text-sm">Email Address</label>
-                         <input type="email" id="notify-email" name="email" class="w-full p-3 border-2 border-black focus:outline-none focus:bg-[#f0f9ff] transition-colors" placeholder="you@company.com" required>
-                         <!-- Honeypot for spam protection -->
-                         <input type="text" name="_honey" style="display:none">
-                         <!-- Disable captcha for smoother testing -->
-                         <input type="hidden" name="_captcha" value="false">
-                         <input type="hidden" name="_subject" value="New Maintenance Notification Request">
-                     </div>
-                     <button type="submit" id="submit-btn" class="w-full bg-black text-white p-4 font-bold uppercase hover:bg-[#4CA6FE] hover:text-black transition-colors border-2 border-black hover-lift">
-                         Notify Me
-                     </button>
-                 </form>
-             </div>
-
-             <!-- Success State (Hidden by default) -->
-             <div id="success-message" class="hidden text-center py-8">
-                 <div class="w-16 h-16 bg-green-100 border-thick rounded-full flex items-center justify-center mx-auto mb-6 text-green-600">
-                     <i data-lucide="check" class="w-8 h-8"></i>
-                 </div>
-                 <h2 class="text-2xl font-black uppercase mb-4">Thank You!</h2>
-                 <p class="text-[#585858] mb-2">We have received your request.</p>
-                 <p class="text-sm text-gray-400">Submission sent to: <strong>cs.access@tuta.io</strong></p>
-             </div>
+    <div id="view-service-remediation" class="view-section">
+        <div class="p-8 lg:p-16 border-b-thick bg-f0f9ff">
+            <button onclick="navigate('services')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> All Services</button>
+            <h2 class="text-4xl font-black mb-4">Code Remediation</h2>
+            <p class="text-xl max-w-2xl text-[#585858]">We don't just report issues; we fix them. Our developers integrate directly with your team to remediate codebases in React, Angular, Vue, and plain HTML.</p>
         </div>
+        <div class="p-8 lg:p-16 prose prose-xl">
+            <p>Our remediation services include:</p>
+            <ul>
+                <li>ARIA attribute correction</li>
+                <li>Keyboard focus management repairs</li>
+                <li>Semantic HTML restructuring</li>
+                <li>Custom widget accessibility (Tabs, Modals, Carousels)</li>
+            </ul>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
 
-    </main>
+    <div id="view-service-training" class="view-section">
+        <div class="p-8 lg:p-16 border-b-thick bg-white">
+            <button onclick="navigate('services')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> All Services</button>
+            <h2 class="text-4xl font-black mb-4">Team Training</h2>
+            <p class="text-xl max-w-2xl text-[#585858]">Empower your organization with the knowledge to maintain accessibility long-term.</p>
+        </div>
+        <div class="p-8 lg:p-16 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="border-thick p-6">
+                <h3 class="font-bold text-xl mb-2">For Developers</h3>
+                <p>Technical workshops on WAI-ARIA, semantic HTML, and automated testing integration.</p>
+            </div>
+            <div class="border-thick p-6">
+                <h3 class="font-bold text-xl mb-2">For Designers</h3>
+                <p>Color contrast mastery, annotation for accessibility, and inclusive component design.</p>
+            </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
 
-    <!-- Footer -->
-    <footer class="border-t-2 border-black bg-white py-6 px-6 text-center relative z-10">
-        <p class="text-sm font-mono text-[#585858]">© 2026 OpenAccessibility. All rights reserved.</p>
-    </footer>
+    <div id="view-service-design" class="view-section">
+        <div class="p-8 lg:p-16 border-b-thick bg-blue-50">
+            <button onclick="navigate('services')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> All Services</button>
+            <h2 class="text-4xl font-black mb-4">Inclusive Design</h2>
+            <p class="text-xl max-w-2xl text-[#585858]">Shift left by designing for accessibility from the start. We help create design systems that are compliant by default.</p>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+
+    <div id="view-service-legal" class="view-section">
+        <div class="p-8 lg:p-16 border-b-thick bg-white">
+            <button onclick="navigate('services')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> All Services</button>
+            <h2 class="text-4xl font-black mb-4">Legal Compliance Support</h2>
+            <p class="text-xl max-w-2xl text-[#585858]">Mitigate litigation risk with our VPAT creation and legal support services.</p>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+
+    <div id="view-service-qa" class="view-section">
+        <div class="p-8 lg:p-16 border-b-thick bg-f0f9ff">
+            <button onclick="navigate('services')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> All Services</button>
+            <h2 class="text-4xl font-black mb-4">QA & Testing</h2>
+            <p class="text-xl max-w-2xl text-[#585858]">Continuous accessibility testing to ensure new features don't introduce barriers.</p>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+
+    <!-- 10. TOOLS INDEX -->
+    <div id="view-tools" class="view-section">
+        <div class="max-w-7xl mx-auto p-8 lg:p-12 flex-grow">
+            <h2 class="text-5xl font-black mb-12">A11y Tools</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Tool 1: Contrast -->
+                <div onclick="navigate('tool-contrast')" class="border-thick p-8 hover-lift cursor-pointer bg-white">
+                    <i class="fa-solid fa-circle-half-stroke text-4xl mb-4 text-[#4CA6FE]"></i>
+                    <h3 class="text-2xl font-bold">Contrast Checker</h3>
+                    <p>Check foreground/background ratios.</p>
+                </div>
+                <!-- Tool 2: Alt Text -->
+                <div onclick="navigate('tool-alt')" class="border-thick p-8 hover-lift cursor-pointer bg-white">
+                    <i class="fa-solid fa-image text-4xl mb-4 text-[#4CA6FE]"></i>
+                    <h3 class="text-2xl font-bold">Alt Text Decision</h3>
+                    <p>Decision tree for image descriptions.</p>
+                </div>
+                <!-- Tool 3: ARIA -->
+                <div onclick="navigate('tool-aria')" class="border-thick p-8 hover-lift cursor-pointer bg-white">
+                    <i class="fa-solid fa-tag text-4xl mb-4 text-[#4CA6FE]"></i>
+                    <h3 class="text-2xl font-bold">ARIA Builder</h3>
+                    <p>Generate snippets for common patterns.</p>
+                </div>
+                <!-- Tool 4: PX to REM -->
+                <div onclick="navigate('tool-pxrem')" class="border-thick p-8 hover-lift cursor-pointer bg-white">
+                    <i class="fa-solid fa-text-height text-4xl mb-4 text-[#4CA6FE]"></i>
+                    <h3 class="text-2xl font-bold">PX to REM</h3>
+                    <p>Convert units for scalable text.</p>
+                </div>
+                <!-- Tool 5: Readability -->
+                <div onclick="navigate('tool-readability')" class="border-thick p-8 hover-lift cursor-pointer bg-white">
+                    <i class="fa-solid fa-book-open text-4xl mb-4 text-[#4CA6FE]"></i>
+                    <h3 class="text-2xl font-bold">Readability</h3>
+                    <p>Check Flesch-Kincaid grade level.</p>
+                </div>
+                <!-- Tool 6: Target Size -->
+                <div onclick="navigate('tool-touch')" class="border-thick p-8 hover-lift cursor-pointer bg-white">
+                    <i class="fa-solid fa-fingerprint text-4xl mb-4 text-[#4CA6FE]"></i>
+                    <h3 class="text-2xl font-bold">Target Size</h3>
+                    <p>Verify touch target dimensions.</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+
+    <!-- 11. TOOL: CONTRAST CHECKER (Enhanced) -->
+    <div id="view-tool-contrast" class="view-section">
+        <div class="max-w-2xl mx-auto p-8 lg:p-16 flex-grow w-full">
+            <button onclick="navigate('tools')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> Back to Tools</button>
+            <h2 class="text-4xl font-black mb-8">Contrast Checker</h2>
+            <div class="border-thick p-8 bg-gray-50">
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div>
+                        <label class="block font-bold mb-2">Foreground</label>
+                        <div class="flex">
+                            <input type="color" id="fg-picker" value="#000000" class="h-12 w-12 border-2 border-black mr-2 cursor-pointer" oninput="updateColorFromPicker('fg')">
+                            <input type="text" id="fg-color" value="#000000" class="tool-input" oninput="updateColorFromText('fg')">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-2">Background</label>
+                        <div class="flex">
+                            <input type="color" id="bg-picker" value="#FFFFFF" class="h-12 w-12 border-2 border-black mr-2 cursor-pointer" oninput="updateColorFromPicker('bg')">
+                            <input type="text" id="bg-color" value="#FFFFFF" class="tool-input" oninput="updateColorFromText('bg')">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="border-thick p-8 text-center rounded mb-6 transition-colors" id="contrast-preview">
+                    <span id="preview-text" class="text-3xl font-bold">Preview Text</span>
+                    <p class="mt-2 text-sm opacity-80">The quick brown fox jumps over the lazy dog.</p>
+                </div>
+                
+                <div class="flex justify-between items-center bg-white border-thick p-4">
+                    <div>
+                        <p class="text-sm font-bold uppercase tracking-widest text-gray-500">Contrast Ratio</p>
+                        <p class="text-4xl font-black" id="contrast-ratio">21.00:1</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-lg font-bold" id="pass-fail-aa">AA: <span class="text-green-600">PASS</span></p>
+                        <p class="text-lg font-bold" id="pass-fail-aaa">AAA: <span class="text-green-600">PASS</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+
+    <!-- 12. TOOL: ALT TEXT DECISION (Interactive) -->
+    <div id="view-tool-alt" class="view-section">
+        <div class="max-w-2xl mx-auto p-8 lg:p-16 flex-grow w-full">
+            <button onclick="navigate('tools')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> Back to Tools</button>
+            <h2 class="text-4xl font-black mb-8">Alt Text Helper</h2>
+            <div class="border-thick p-8 bg-white">
+                <div id="alt-step-1">
+                    <h3 class="text-2xl font-bold mb-4">Is the image purely decorative?</h3>
+                    <p class="mb-6 text-gray-600">Does it add visual styling (like a border or background pattern) but no information?</p>
+                    <div class="flex gap-4">
+                        <button class="border-thick px-6 py-3 hover:bg-black hover:text-white transition-colors font-bold w-1/2" onclick="showAltResult('decorative')">Yes</button>
+                        <button class="border-thick px-6 py-3 hover:bg-black hover:text-white transition-colors font-bold w-1/2" onclick="showAltStep(2)">No</button>
+                    </div>
+                </div>
+                <div id="alt-step-2" class="hidden">
+                    <h3 class="text-2xl font-bold mb-4">Does the image contain text?</h3>
+                    <p class="mb-6 text-gray-600">Is there text embedded in the image that isn't repeated nearby?</p>
+                    <div class="flex gap-4">
+                        <button class="border-thick px-6 py-3 hover:bg-black hover:text-white transition-colors font-bold w-1/2" onclick="showAltResult('text')">Yes</button>
+                        <button class="border-thick px-6 py-3 hover:bg-black hover:text-white transition-colors font-bold w-1/2" onclick="showAltStep(3)">No</button>
+                    </div>
+                </div>
+                <div id="alt-step-3" class="hidden">
+                    <h3 class="text-2xl font-bold mb-4">Is it a functional icon/link?</h3>
+                    <p class="mb-6 text-gray-600">Is the image inside a link or button (e.g., a printer icon, search glass)?</p>
+                    <div class="flex gap-4">
+                        <button class="border-thick px-6 py-3 hover:bg-black hover:text-white transition-colors font-bold w-1/2" onclick="showAltResult('functional')">Yes</button>
+                        <button class="border-thick px-6 py-3 hover:bg-black hover:text-white transition-colors font-bold w-1/2" onclick="showAltResult('informative')">No</button>
+                    </div>
+                </div>
+                <div id="alt-result" class="hidden bg-blue-50 p-6 border-thick mt-4">
+                    <h4 class="font-bold text-xl mb-2">Recommendation:</h4>
+                    <code class="block bg-black text-white p-4 rounded mb-4 font-mono" id="alt-code"></code>
+                    <p id="alt-explanation" class="text-gray-700"></p>
+                    <button class="mt-4 text-sm font-bold underline" onclick="resetAltTool()">Start Over</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+
+    <!-- 13. TOOL: ARIA BUILDER (Interactive) -->
+    <div id="view-tool-aria" class="view-section">
+        <div class="max-w-2xl mx-auto p-8 lg:p-16 flex-grow w-full">
+            <button onclick="navigate('tools')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> Back to Tools</button>
+            <h2 class="text-4xl font-black mb-8">ARIA Builder</h2>
+            <div class="border-thick p-8 bg-white">
+                <label class="block font-bold mb-4">Select a Component Pattern:</label>
+                <select id="aria-select" class="tool-input mb-6" onchange="updateAriaBuilder()">
+                    <option value="">-- Choose --</option>
+                    <option value="button">Fake Button (div/span)</option>
+                    <option value="alert">Alert Message</option>
+                    <option value="modal">Modal Dialog</option>
+                    <option value="nav">Navigation Region</option>
+                    <option value="img">Complex Image</option>
+                </select>
+                
+                <div id="aria-output-container" class="hidden">
+                    <h3 class="font-bold mb-2">Code Snippet:</h3>
+                    <pre class="bg-gray-800 text-green-400 p-4 border-thick overflow-x-auto"><code id="aria-code"></code></pre>
+                    <p class="mt-4 text-sm text-gray-600" id="aria-desc"></p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+
+    <!-- 14. TOOL: PX TO REM (New) -->
+    <div id="view-tool-pxrem" class="view-section">
+        <div class="max-w-2xl mx-auto p-8 lg:p-16 flex-grow w-full">
+            <button onclick="navigate('tools')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> Back to Tools</button>
+            <h2 class="text-4xl font-black mb-8">PX to REM Converter</h2>
+            <div class="border-thick p-8 bg-white">
+                <div class="mb-6">
+                    <label class="block font-bold mb-2">Root Font Size (px)</label>
+                    <input type="number" id="base-size" value="16" class="tool-input" oninput="convertPxRem()">
+                </div>
+                <div class="grid grid-cols-2 gap-8 items-center">
+                    <div>
+                        <label class="block font-bold mb-2">Pixels (px)</label>
+                        <input type="number" id="input-px" placeholder="16" class="tool-input" oninput="convertPxRem('px')">
+                    </div>
+                    <div class="text-center font-black text-2xl text-gray-400">&harr;</div>
+                    <div>
+                        <label class="block font-bold mb-2">REM</label>
+                        <input type="number" id="input-rem" placeholder="1" class="tool-input" oninput="convertPxRem('rem')">
+                    </div>
+                </div>
+                <div class="mt-8 p-4 bg-blue-50 border-l-4 border-[#4CA6FE]">
+                    <p class="text-sm"><strong>Why REM?</strong> Using REM units allows users to scale text size via browser settings, which is essential for low-vision accessibility. Avoid fixed pixels for font sizes.</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+
+    <!-- 15. TOOL: READABILITY (New) -->
+    <div id="view-tool-readability" class="view-section">
+        <div class="max-w-2xl mx-auto p-8 lg:p-16 flex-grow w-full">
+            <button onclick="navigate('tools')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> Back to Tools</button>
+            <h2 class="text-4xl font-black mb-8">Readability Scorer</h2>
+            <div class="border-thick p-8 bg-white">
+                <label class="block font-bold mb-2">Paste Text:</label>
+                <textarea id="readability-input" class="tool-input h-48 mb-6" placeholder="Paste content here to check complexity..." oninput="calcReadability()"></textarea>
+                
+                <div class="grid grid-cols-3 gap-4 text-center">
+                    <div class="p-4 bg-gray-50 border-thick">
+                        <span class="block text-2xl font-black" id="score-grade">-</span>
+                        <span class="text-xs uppercase">Grade Level</span>
+                    </div>
+                    <div class="p-4 bg-gray-50 border-thick">
+                        <span class="block text-2xl font-black" id="score-words">0</span>
+                        <span class="text-xs uppercase">Words</span>
+                    </div>
+                    <div class="p-4 bg-gray-50 border-thick">
+                        <span class="block text-2xl font-black" id="score-sentences">0</span>
+                        <span class="text-xs uppercase">Sentences</span>
+                    </div>
+                </div>
+                <p class="mt-4 text-sm text-gray-500">Based on Flesch-Kincaid Grade Level formula. Aim for Grade 8 or lower for maximum accessibility (WCAG AAA requires Lower Secondary Education level).</p>
+            </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+
+    <!-- 16. TOOL: TARGET SIZE (New) -->
+    <div id="view-tool-touch" class="view-section">
+        <div class="max-w-2xl mx-auto p-8 lg:p-16 flex-grow w-full">
+            <button onclick="navigate('tools')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> Back to Tools</button>
+            <h2 class="text-4xl font-black mb-8">Touch Target Calc</h2>
+            <div class="border-thick p-8 bg-white">
+                <div class="grid grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block font-bold mb-2">Width (px)</label>
+                        <input type="number" id="target-w" value="44" class="tool-input" oninput="checkTarget()">
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-2">Height (px)</label>
+                        <input type="number" id="target-h" value="44" class="tool-input" oninput="checkTarget()">
+                    </div>
+                </div>
+                
+                <div id="target-preview" class="w-[44px] h-[44px] bg-[#4CA6FE] mx-auto mb-6 flex items-center justify-center text-white text-xs transition-all border-2 border-black">
+                    Tap
+                </div>
+                
+                <div class="border-t-thick pt-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold">WCAG 2.2 AA (24x24):</span>
+                        <span id="res-wcag" class="font-black text-green-600">PASS</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold">Apple/Android (44x44/48x48):</span>
+                        <span id="res-mobile" class="font-black text-green-600">PASS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+
+    <!-- 17-23. ADDITIONAL ARTICLE READ PAGES (Existing placeholders + content) -->
+    <div id="view-article-wcag" class="view-section">
+        <div class="max-w-4xl mx-auto p-8 lg:p-16 flex-grow">
+            <button onclick="navigate('articles')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <h1 class="text-4xl lg:text-6xl font-black mb-8">WCAG 2.2 Overview</h1>
+            <div class="prose prose-xl">
+                <p>The Web Content Accessibility Guidelines (WCAG) 2.2 is the latest iteration of the global standard for web accessibility. It includes all criteria from 2.0 and 2.1, adding 9 new success criteria designed to improve the web for users with cognitive disabilities, low vision, and those on mobile devices.</p>
+                <h3>Key New Success Criteria</h3>
+                <ul>
+                    <li><strong>2.4.11 Focus Not Obscured (AA):</strong> When a user focuses on an element, it must not be entirely hidden by other content.</li>
+                    <li><strong>2.5.7 Dragging Movements (AA):</strong> Functionality that uses dragging must have a single-pointer alternative.</li>
+                    <li><strong>2.5.8 Target Size (Minimum) (AA):</strong> The target size for pointer inputs should be at least 24x24 CSS pixels.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+    
+    <div id="view-article-ada" class="view-section">
+        <div class="max-w-4xl mx-auto p-8 lg:p-16 flex-grow">
+            <button onclick="navigate('articles')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <h1 class="text-4xl lg:text-6xl font-black mb-8">ADA Compliance Guide</h1>
+            <div class="prose prose-xl">
+                <p class="lead text-2xl font-light mb-8">The Americans with Disabilities Act (ADA) prohibits discrimination based on disability. While the law was written in 1990—before the modern web—courts and the Department of Justice (DOJ) have affirmed that it applies to digital spaces.</p>
+                
+                <h3>Title III and Public Accommodations</h3>
+                <p>Title III of the ADA covers "places of public accommodation." This originally meant physical locations like banks, hotels, and retail stores. However, in the digital age, a business's website and mobile app are considered extensions of their physical services (or public accommodations in their own right, depending on the court circuit).</p>
+                
+                <div class="bg-blue-50 border-l-4 border-black p-6 my-8">
+                    <h4 class="text-lg font-bold uppercase mb-2">DOJ Guidance (2022)</h4>
+                    <p class="text-base mb-0">"The Department of Justice continues to take the position that web accessibility is a priority... Businesses open to the public must ensure that the programs, services, and activities they provide to the public are accessible to people with disabilities."</p>
+                </div>
+
+                <h3>Common Legal Triggers</h3>
+                <p>Most ADA lawsuits regarding digital accessibility cite specific barriers that prevent users from utilizing the service. Common triggers include:</p>
+                <ul>
+                    <li><strong>Missing Alt Text:</strong> Screen reader users cannot understand the function of images or buttons.</li>
+                    <li><strong>Keyboard Traps:</strong> Users cannot navigate forms or purchase flows without a mouse.</li>
+                    <li><strong>Inaccessible PDFs:</strong> Essential documents (menus, contracts) are images rather than readable text.</li>
+                    <li><strong>Video Captions:</strong> Lack of closed captioning for deaf or hard-of-hearing users.</li>
+                </ul>
+
+                <h3>The "Safe Harbor" Standard</h3>
+                <p>While the ADA does not codify specific technical standards, the <strong>Web Content Accessibility Guidelines (WCAG) 2.1 Level AA</strong> is universally accepted by courts, the DOJ, and accessibility advocates as the benchmark for compliance.</p>
+                
+                <h3>Steps to Protect Your Organization</h3>
+                <ol>
+                    <li><strong>Audit:</strong> Don't rely solely on automated widgets (overlays). Conduct a full manual audit of your core user flows.</li>
+                    <li><strong>Remediate:</strong> Fix the code. Prioritize "blocker" issues that prevent access to primary services.</li>
+                    <li><strong>Statement:</strong> Publish an Accessibility Statement. It shows good faith and provides a feedback mechanism for users to report issues before suing.</li>
+                    <li><strong>Maintain:</strong> Accessibility is ongoing. Test every new deployment.</li>
+                </ol>
+            </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+
+    <div id="view-article-mobile" class="view-section">
+        <div class="max-w-4xl mx-auto p-8 lg:p-16 flex-grow">
+            <button onclick="navigate('articles')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <h1 class="text-4xl lg:text-6xl font-black mb-8">Mobile Accessibility</h1>
+            <div class="prose prose-xl">
+                <p class="lead text-2xl font-light mb-8">Mobile accessibility ensures apps and sites work on small screens, support touch gestures properly, and handle orientation changes without breaking.</p>
+                
+                <h3>Touch Targets (WCAG 2.5.5)</h3>
+                <p>Interactive elements must be large enough to tap accurately, especially for users with motor impairments or tremors. </p>
+                <ul>
+                    <li><strong>Size:</strong> Targets should be at least 44x44 CSS pixels (AAA level) or 24x24 CSS pixels (WCAG 2.2 AA).</li>
+                    <li><strong>Spacing:</strong> Ensure adequate spacing between buttons to prevent accidental taps.</li>
+                </ul>
+
+                <h3>Gestures (WCAG 2.5.1)</h3>
+                <p>Complex path-based gestures (like swiping, pinching, or drawing a pattern) can be difficult for some users.</p>
+                <ul>
+                    <li><strong>Alternative Inputs:</strong> Any action achievable via a complex gesture must also be achievable via a simple single-pointer click or tap.</li>
+                    <li><strong>Example:</strong> A map that allows pinch-to-zoom must also have visible "+" and "-" zoom buttons.</li>
+                </ul>
+
+                <h3>Orientation (WCAG 1.3.4)</h3>
+                <p>Some users have their mobile devices mounted in a fixed position on a wheelchair and cannot rotate them.</p>
+                <p><strong>Requirement:</strong> Content must not restrict its view and operation to a single display orientation, such as portrait or landscape, unless a specific orientation is essential.</p>
+
+                <h3>Responsive Design Reflow (WCAG 1.4.10)</h3>
+                <p>Content must reflow without requiring two-dimensional scrolling (scrolling both vertically and horizontally) at a width equivalent to 320 CSS pixels. This corresponds to a mobile device held vertically.</p>
+            </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+
+    <div id="view-article-eaa" class="view-section">
+        <div class="max-w-4xl mx-auto p-8 lg:p-16 flex-grow">
+            <button onclick="navigate('articles')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <h1 class="text-4xl lg:text-6xl font-black mb-8">European Accessibility Act</h1>
+            <div class="prose prose-xl">
+                <p class="lead text-2xl font-light mb-8">The European Accessibility Act (EAA), Directive 2019/882, aims to improve the functioning of the internal market for accessible products and services, by removing barriers created by divergent rules in Member States.</p>
+                
+                <h3>Scope of the Directive</h3>
+                <p>The EAA applies to specific products and services identified as having the highest risk of divergent accessibility requirements across EU countries:</p>
+                <ul>
+                    <li>Computers and operating systems</li>
+                    <li>ATMs, ticketing machines, and check-in machines</li>
+                    <li>Smartphones</li>
+                    <li>TV equipment related to digital television services</li>
+                    <li>Telephony services and related equipment</li>
+                    <li>Access to audio-visual media services (AVMS)</li>
+                    <li>Services related to air, bus, rail, and waterborne passenger transport</li>
+                    <li>Banking services</li>
+                    <li>E-books and e-readers</li>
+                    <li>E-commerce</li>
+                </ul>
+
+                <h3>Key Dates</h3>
+                <ul>
+                    <li><strong>28 June 2022:</strong> Deadline for EU Member States to transpose the Directive into national law.</li>
+                    <li><strong>28 June 2025:</strong> The measures of the national laws must be applied.</li>
+                </ul>
+                
+                <h3>Standard to Follow: EN 301 549</h3>
+                <p>While the EAA defines *what* needs to be accessible, the European standard <strong>EN 301 549</strong> defines *how*. This standard is largely harmonized with WCAG 2.1 AA but includes additional requirements for biometrics and hardware.</p>
+                
+                <h3>Penalties</h3>
+                <p>Enforcement is handled by individual Member States. Penalties can include fines and the removal of non-compliant products/services from the EU market.</p>
+            </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+
+    <div id="view-article-keyboard" class="view-section">
+        <div class="max-w-4xl mx-auto p-8 lg:p-16 flex-grow">
+            <button onclick="navigate('articles')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <h1 class="text-4xl lg:text-6xl font-black mb-8">Keyboard Navigation</h1>
+            <div class="prose prose-xl">
+                <p class="lead text-2xl font-light mb-8">Keyboard accessibility is the foundation of web accessibility. Many users, including those with motor disabilities, blind users, and power users, rely on a keyboard instead of a mouse.</p>
+                
+                <h3>1. Focus Visible (WCAG 2.4.7)</h3>
+                <p>Users must know which element has the keyboard focus. A visible indicator (usually a ring or outline) is essential.</p>
+                <div class="bg-gray-100 p-4 border-l-4 border-red-500 my-4 font-mono text-sm">
+                    /* BAD PRACTICE */<br>
+                    :focus { outline: none; }
+                </div>
+                <p>Never remove the default outline without replacing it with a high-contrast alternative.</p>
+
+                <h3>2. Logical Tab Order (WCAG 2.4.3)</h3>
+                <p>The order in which elements receive focus should follow the visual flow of the page (usually left-to-right, top-to-bottom). This is controlled by the DOM order.</p>
+                <ul>
+                    <li>Avoid using <code>tabindex</code> with positive values (e.g., <code>tabindex="1"</code>), as this breaks the natural flow.</li>
+                    <li>Use <code>tabindex="0"</code> to make non-interactive elements focusable if necessary.</li>
+                    <li>Use <code>tabindex="-1"</code> to make elements focusable programmatically but not via the Tab key.</li>
+                </ul>
+
+                <h3>3. No Keyboard Traps (WCAG 2.1.2)</h3>
+                <p>Ensure that if a user can tab into a component (like a video player or modal), they can also tab out of it. Focus should not get "stuck."</p>
+
+                <h3>4. Skip Links (WCAG 2.4.1)</h3>
+                <p>Provide a "Skip to Content" link as the first focusable element on the page. This allows keyboard users to bypass repetitive navigation menus and get straight to the main content.</p>
+            </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+
+    <div id="view-article-sr" class="view-section">
+        <div class="max-w-4xl mx-auto p-8 lg:p-16 flex-grow">
+            <button onclick="navigate('articles')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <h1 class="text-4xl lg:text-6xl font-black mb-8">Screen Readers</h1>
+            <div class="prose prose-xl">
+                <p class="lead text-2xl font-light mb-8">Screen readers are software programs that convert on-screen text into synthesized speech or Braille output. They are the primary tool for blind and low-vision users to navigate the web.</p>
+                
+                <h3>How They Work</h3>
+                <p>Screen readers do not "see" the screen; they read the underlying HTML code (the DOM). They rely on the Accessibility Tree, which is generated by the browser based on the DOM.</p>
+                
+                <h3>Semantic HTML is Key</h3>
+                <p>The most effective way to support screen readers is to use native HTML elements correctly.</p>
+                <ul>
+                    <li><strong>Headings (`h1`-`h6`):</strong> Provide a navigable structure. Users often jump between headings to scan content.</li>
+                    <li><strong>Buttons vs. Links:</strong> Use `&lt;button&gt;` for actions (submit, open modal) and `&lt;a&gt;` for navigation. Screen readers announce them differently.</li>
+                    <li><strong>Lists:</strong> Use `&lt;ul&gt;` and `&lt;ol&gt;` so screen readers can announce "List of 5 items."</li>
+                </ul>
+
+                <h3>Images and Alt Text</h3>
+                <p>Images need `alt` attributes to describe their function or content.</p>
+                <ul>
+                    <li><strong>Decorative:</strong> `alt=""` (Screen reader ignores it).</li>
+                    <li><strong>Informative:</strong> `alt="Graph showing 20% growth"` (Screen reader reads description).</li>
+                </ul>
+
+                <h3>Landmarks</h3>
+                <p>Use landmark regions (`&lt;main&gt;`, `&lt;nav&gt;`, `&lt;header&gt;`, `&lt;footer&gt;`, `&lt;aside&gt;`) to define the page structure. Screen reader users can jump directly to these regions.</p>
+
+                <h3>Popular Screen Readers</h3>
+                <ul>
+                    <li><strong>NVDA (NonVisual Desktop Access):</strong> Free, open-source, widely used on Windows.</li>
+                    <li><strong>JAWS (Job Access With Speech):</strong> Commercial, powerful, widely used on Windows.</li>
+                    <li><strong>VoiceOver:</strong> Built-in to macOS and iOS devices.</li>
+                    <li><strong>TalkBack:</strong> Built-in to Android devices.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+
+    <!-- 14. ARTICLES INDEX (Already added above) -->
+    <div id="view-articles" class="view-section">
+        <div class="max-w-7xl mx-auto p-8 lg:p-12 flex-grow">
+            <h2 class="text-5xl font-black mb-12">Knowledge Base</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Article 1: WCAG -->
+                <a href="#article-wcag" onclick="navigate('article-wcag')" class="p-8 border-thick hover-lift cursor-pointer bg-white group block h-full">
+                    <div class="w-12 h-12 bg-blue-50 flex items-center justify-center mb-6 text-[#4CA6FE]">
+                        <i class="fa-solid fa-universal-access text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">WCAG 2.2 Overview</h3>
+                    <p class="font-light text-sm mb-4 text-[#585858]">Understand the new success criteria for low vision and cognitive accessibility.</p>
+                    <span class="text-xs font-bold border-b border-black">READ GUIDE</span>
+                </a>
+
+                <!-- Article 2: ADA -->
+                <a href="#article-ada" onclick="navigate('article-ada')" class="p-8 border-thick hover-lift cursor-pointer bg-white group block h-full">
+                    <div class="w-12 h-12 bg-green-50 flex items-center justify-center mb-6 text-green-600">
+                        <i class="fa-solid fa-scale-balanced text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">ADA Compliance</h3>
+                    <p class="font-light text-sm mb-4 text-[#585858]">Legal requirements for digital accessibility under Title III of the ADA.</p>
+                    <span class="text-xs font-bold border-b border-black">READ GUIDE</span>
+                </a>
+
+                <!-- Article 3: Mobile -->
+                <a href="#article-mobile" onclick="navigate('article-mobile')" class="p-8 border-thick hover-lift cursor-pointer bg-white group block h-full">
+                    <div class="w-12 h-12 bg-purple-50 flex items-center justify-center mb-6 text-purple-600">
+                        <i class="fa-solid fa-mobile-screen-button text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Mobile A11y</h3>
+                    <p class="font-light text-sm mb-4 text-[#585858]">Best practices for touch targets, gestures, and responsive layouts.</p>
+                    <span class="text-xs font-bold border-b border-black">READ GUIDE</span>
+                </a>
+
+                <!-- Article 4: EAA -->
+                <a href="#article-eaa" onclick="navigate('article-eaa')" class="p-8 border-thick hover-lift cursor-pointer bg-white group block h-full">
+                    <div class="w-12 h-12 bg-yellow-50 flex items-center justify-center mb-6 text-yellow-600">
+                        <i class="fa-solid fa-euro-sign text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">European Access Act</h3>
+                    <p class="font-light text-sm mb-4 text-[#585858]">What the 2025 deadline means for e-commerce and banking in the EU.</p>
+                    <span class="text-xs font-bold border-b border-black">READ GUIDE</span>
+                </a>
+
+                <!-- Article 5: Keyboard -->
+                <a href="#article-keyboard" onclick="navigate('article-keyboard')" class="p-8 border-thick hover-lift cursor-pointer bg-white group block h-full">
+                    <div class="w-12 h-12 bg-red-50 flex items-center justify-center mb-6 text-red-600">
+                        <i class="fa-solid fa-keyboard text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Keyboard Nav</h3>
+                    <p class="font-light text-sm mb-4 text-[#585858]">Ensuring full functionality without a mouse using logical tab order.</p>
+                    <span class="text-xs font-bold border-b border-black">READ GUIDE</span>
+                </a>
+
+                <!-- Article 6: Screen Readers -->
+                <a href="#article-sr" onclick="navigate('article-sr')" class="p-8 border-thick hover-lift cursor-pointer bg-white group block h-full">
+                    <div class="w-12 h-12 bg-gray-100 flex items-center justify-center mb-6 text-gray-600">
+                        <i class="fa-solid fa-volume-high text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Screen Readers</h3>
+                    <p class="font-light text-sm mb-4 text-[#585858]">How NVDA and VoiceOver interpret semantic HTML and ARIA.</p>
+                    <span class="text-xs font-bold border-b border-black">READ GUIDE</span>
+                </a>
+            </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+
+    <!-- 21-24. LEGAL PAGES -->
+    <div id="view-legal-privacy" class="view-section">
+        <div class="max-w-3xl mx-auto p-16 flex-grow">
+            <h1 class="text-4xl font-bold mb-8">Privacy Policy</h1>
+            <p class="prose prose-lg">At OpenAccessibility, we collect minimal data necessary for service provision. We do not sell data to third parties.</p>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+    <div id="view-legal-terms" class="view-section">
+        <div class="max-w-3xl mx-auto p-16 flex-grow">
+            <h1 class="text-4xl font-bold mb-8">Terms of Service</h1>
+            <p class="prose prose-lg">By using our tools, you agree they are for educational and testing purposes. We are not liable for legal actions taken against your site.</p>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+    <div id="view-legal-a11y" class="view-section">
+        <div class="max-w-3xl mx-auto p-16 flex-grow">
+            <h1 class="text-4xl font-bold mb-8">Accessibility Statement</h1>
+            <p class="prose prose-lg">We strive for WCAG 2.2 AAA conformance. If you find a barrier, please contact support.access@tuta.io.</p>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+    <div id="view-license" class="view-section">
+        <div class="max-w-3xl mx-auto p-16 flex-grow">
+            <h1 class="text-4xl font-bold mb-8">License Information</h1>
+            <div class="prose prose-lg">
+                <p class="text-xl mb-8">The educational content, tools, and layout of the OpenAccessibility website are licensed under the <strong>Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)</strong>.</p>
+                
+                <div class="border-thick p-8 bg-gray-50 mb-8">
+                    <h3 class="text-2xl font-bold mb-4">You are free to:</h3>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-share nodes text-black mt-1"></i>
+                            <span><strong>Share:</strong> Copy and redistribute the material in any medium or format.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-pen-to-square text-black mt-1"></i>
+                            <span><strong>Adapt:</strong> Remix, transform, and build upon the material.</span>
+                        </li>
+                    </ul>
+                    
+                    <h3 class="text-2xl font-bold mb-4">Under the following terms:</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-brands fa-creative-commons-by text-2xl text-black"></i>
+                            <div>
+                                <strong>Attribution:</strong> You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-brands fa-creative-commons-nc text-2xl text-black"></i>
+                            <div>
+                                <strong>NonCommercial:</strong> You may not use the material for commercial purposes.
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-brands fa-creative-commons-sa text-2xl text-black"></i>
+                            <div>
+                                <strong>ShareAlike:</strong> If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <h3>Exceptions</h3>
+                <p>The <strong>OpenAccessibility logo</strong>, branding assets, and any third-party trademarks displayed on this site are <strong>excluded</strong> from this license and remain the property of their respective owners.</p>
+                
+                <h3>Linking to Us</h3>
+                <p>You are welcome to link to any page on this site. Hotlinking of images or assets is prohibited without express permission.</p>
+                
+                <div class="mt-8 pt-8 border-t-thick">
+                    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" class="bg-black text-white px-6 py-3 font-bold uppercase hover:bg-[#4CA6FE] hover:text-black transition-colors inline-block">View Legal Code</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+
+    <!-- 25. CONTACT (Maintained) -->
+    <div id="view-contact" class="view-section">
+        <div class="grid grid-cols-1 lg:grid-cols-2 border-b-thick flex-grow">
+            <div class="p-8 lg:p-16 border-r-thick border-b-thick lg:border-b-0 flex flex-col justify-center bg-white">
+                <h2 class="text-4xl font-bold mb-6 text-black">Get in Touch</h2>
+                <p class="text-xl font-light mb-12 text-[#585858]">Ready to make your product accessible? We are here to help.</p>
+                <div class="space-y-6">
+                    <div class="border-thick p-6 hover:bg-black hover:text-white transition-colors cursor-pointer group">
+                        <span class="block font-bold text-xl mb-1">Email Support</span>
+                        <span>support.access@tuta.io</span>
+                    </div>
+                    <div class="border-thick p-6 hover:bg-black hover:text-white transition-colors cursor-pointer group">
+                        <span class="block font-bold text-xl mb-1">HQ Location</span>
+                        <span>Digital City, 90210</span>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-100 flex items-center justify-center p-12 overflow-hidden relative">
+                <svg viewBox="0 0 200 100" class="w-full text-gray-300" fill="currentColor">
+                     <path d="M20,50 Q50,10 80,50 T140,50 T200,50" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="5,5" />
+                     <circle cx="20" cy="50" r="5" class="text-[#4CA6FE]" />
+                     <circle cx="80" cy="50" r="5" />
+                     <circle cx="140" cy="50" r="5" />
+                </svg>
+            </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
+
+    <!-- Footer Template -->
+    <template id="footer-template">
+        <footer class="grid grid-cols-1 md:grid-cols-4 border-t-thick mt-auto bg-white">
+            <!-- Branding -->
+            <div class="p-12 border-b-thick md:border-b-0 md:border-r-thick bg-black text-white">
+                <h4 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">OpenAccessibility</h4>
+                <p class="text-2xl font-light">Digital Access<br>For Everyone.</p>
+                <p class="mt-8 text-xs font-mono text-gray-500">© 2026 OpenAccessibility.</p>
+                <p class="text-xs font-mono text-gray-500"><a href="#license" onclick="navigate('license')" class="hover:underline">CC BY-NC-SA 4.0</a></p>
+            </div>
+            
+            <!-- Contact -->
+            <div class="p-12 border-b-thick md:border-b-0 md:border-r-thick flex flex-col justify-center">
+                <h4 class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-4">Support</h4>
+                <div class="mb-6">
+                    <p class="text-sm font-bold">Email</p>
+                    <a href="mailto:support.access@tuta.io" class="text-xl hover:underline text-[#4CA6FE]">support.access@tuta.io</a>
+                </div>
+            </div>
+
+            <!-- Resources (Replaced Menu) -->
+            <div class="p-12 border-b-thick md:border-b-0 md:border-r-thick flex flex-col">
+                <h4 class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-4">Resources</h4>
+                <ul class="space-y-2 font-mono text-sm">
+                    <li><a href="#view-tools" onclick="navigate('tools')" class="hover:underline hover:text-[#4CA6FE]">A11y Tools</a></li>
+                    <li><a href="#view-articles" onclick="navigate('articles')" class="hover:underline hover:text-[#4CA6FE]">Knowledge Base</a></li>
+                    <li><a href="#view-article-wcag" onclick="navigate('article-wcag')" class="hover:underline hover:text-[#4CA6FE]">WCAG 2.2 Guide</a></li>
+                    <li><a href="#view-article-ada" onclick="navigate('article-ada')" class="hover:underline hover:text-[#4CA6FE]">ADA Compliance</a></li>
+                    <li><a href="#view-tool-contrast" onclick="navigate('tool-contrast')" class="hover:underline hover:text-[#4CA6FE]">Contrast Checker</a></li>
+                    <li><a href="#view-license" onclick="navigate('license')" class="hover:underline hover:text-[#4CA6FE]">License Info</a></li>
+                </ul>
+            </div>
+
+            <!-- Social/Legal -->
+            <div class="p-12 flex flex-col justify-between">
+                <div>
+                    <h4 class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6">Connect</h4>
+                    <div class="flex gap-6">
+                        <a href="#" class="w-12 h-12 border-thick rounded-full flex items-center justify-center hover:bg-black hover:text-white transition-colors">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" class="w-5 h-5 fill-current">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="w-12 h-12 border-thick rounded-full flex items-center justify-center hover:bg-black hover:text-white transition-colors">
+                            <i class="fa-brands fa-linkedin-in text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-12 pt-6 border-t-thick">
+                    <div class="flex flex-col gap-2 text-xs font-mono text-gray-500">
+                        <a href="#legal-privacy" onclick="navigate('legal-privacy')" class="hover:text-black">Privacy Policy</a>
+                        <a href="#legal-terms" onclick="navigate('legal-terms')" class="hover:text-black">Terms of Service</a>
+                        <a href="#legal-a11y" onclick="navigate('legal-a11y')" class="hover:text-black">Accessibility Statement</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </template>
 
     <script>
         lucide.createIcons();
 
-        function handleNotify(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('notify-email').value;
-            const btn = document.getElementById('submit-btn');
-            const originalText = btn.innerText;
-            
-            // UI Feedback
-            btn.innerText = 'Sending...';
-            btn.disabled = true;
-            btn.classList.add('opacity-50', 'cursor-not-allowed');
+        // --- ROUTING ---
+        function router(viewName) {
+            const targetView = viewName || 'home';
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            const activeView = document.getElementById(`view-${targetView}`);
+            if (activeView) {
+                activeView.classList.add('active');
+                window.scrollTo(0, 0);
+            } else {
+                document.getElementById('view-home').classList.add('active');
+            }
+        }
 
-            // Use FormSubmit's AJAX endpoint
-            fetch("https://formsubmit.co/ajax/cs.access@tuta.io", {
-                method: "POST",
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    email: email,
-                    _subject: "OpenAccessibility: Notify Me Request"
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('form-container').classList.add('hidden');
-                document.getElementById('success-message').classList.remove('hidden');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("Something went wrong. Please try again later.");
-                // Reset button
-                btn.innerText = originalText;
-                btn.disabled = false;
-                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+        function navigate(viewName) {
+            router(viewName);
+            const menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('open')) { toggleMenu(); }
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('open');
+        }
+
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.slice(1);
+            router(hash);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const footerTemplate = document.getElementById('footer-template');
+            const placeholders = document.querySelectorAll('.footer-placeholder');
+            placeholders.forEach(ph => ph.replaceWith(footerTemplate.content.cloneNode(true)));
+            const hash = window.location.hash.slice(1);
+            router(hash || 'home');
+        });
+
+        // --- TOOLS LOGIC ---
+        
+        // 1. Contrast Checker
+        function getLuminance(hex) {
+            const rgb = parseInt(hex.slice(1), 16);
+            const r = (rgb >> 16) & 0xff;
+            const g = (rgb >>  8) & 0xff;
+            const b = (rgb >>  0) & 0xff;
+            const [lr, lg, lb] = [r, g, b].map(v => {
+                v /= 255;
+                return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
             });
+            return 0.2126 * lr + 0.7152 * lg + 0.0722 * lb;
+        }
+
+        function checkContrast() {
+            const fg = document.getElementById('fg-color').value;
+            const bg = document.getElementById('bg-color').value;
+            if(!/^#[0-9A-F]{6}$/i.test(fg) || !/^#[0-9A-F]{6}$/i.test(bg)) return;
+
+            const lum1 = getLuminance(fg);
+            const lum2 = getLuminance(bg);
+            const ratio = (Math.max(lum1, lum2) + 0.05) / (Math.min(lum1, lum2) + 0.05);
+            
+            document.getElementById('contrast-preview').style.backgroundColor = bg;
+            document.getElementById('preview-text').style.color = fg;
+            document.getElementById('contrast-ratio').innerText = `Ratio: ${ratio.toFixed(2)}:1`;
+            
+            const passAA = ratio >= 4.5 ? "PASS" : (ratio >= 3 ? "LARGE TXT" : "FAIL");
+            const passAAA = ratio >= 7 ? "PASS" : (ratio >= 4.5 ? "LARGE TXT" : "FAIL");
+            
+            document.getElementById('pass-fail-aa').innerHTML = `AA: <span class="${ratio >= 4.5 ? 'text-green-600' : 'text-red-600'}">${passAA}</span>`;
+            document.getElementById('pass-fail-aaa').innerHTML = `AAA: <span class="${ratio >= 7 ? 'text-green-600' : 'text-red-600'}">${passAAA}</span>`;
+        }
+        
+        function updateColorFromPicker(type) {
+            const picker = document.getElementById(`${type}-picker`);
+            const text = document.getElementById(`${type}-color`);
+            text.value = picker.value.toUpperCase();
+            checkContrast();
+        }
+        function updateColorFromText(type) {
+            const text = document.getElementById(`${type}-color`);
+            const picker = document.getElementById(`${type}-picker`);
+            if(/^#[0-9A-F]{6}$/i.test(text.value)) {
+                picker.value = text.value;
+                checkContrast();
+            }
+        }
+
+        // 2. Alt Text Helper
+        function showAltStep(step) {
+            document.getElementById(`alt-step-1`).classList.add('hidden');
+            document.getElementById(`alt-step-2`).classList.add('hidden');
+            document.getElementById(`alt-step-3`).classList.add('hidden');
+            document.getElementById(`alt-step-${step}`).classList.remove('hidden');
+        }
+        function showAltResult(type) {
+            document.getElementById('alt-step-1').classList.add('hidden');
+            document.getElementById('alt-step-2').classList.add('hidden');
+            document.getElementById('alt-step-3').classList.add('hidden');
+            const res = document.getElementById('alt-result');
+            res.classList.remove('hidden');
+            
+            const code = document.getElementById('alt-code');
+            const exp = document.getElementById('alt-explanation');
+            
+            if(type === 'decorative') {
+                code.innerText = 'alt=""';
+                exp.innerText = 'Decorative images should have an empty alt attribute so screen readers skip them.';
+            } else if (type === 'text') {
+                code.innerText = 'alt="[Text in image]"';
+                exp.innerText = 'The alt text should exactly match the text inside the image.';
+            } else if (type === 'functional') {
+                code.innerText = 'alt="[Action]"';
+                exp.innerText = 'Describe the destination or action (e.g., "Print", "Search", "Home"), not the appearance.';
+            } else {
+                code.innerText = 'alt="[Description]"';
+                exp.innerText = 'Briefly describe the visual information being conveyed.';
+            }
+        }
+        function resetAltTool() {
+            document.getElementById('alt-result').classList.add('hidden');
+            showAltStep(1);
+        }
+
+        // 3. ARIA Builder
+        function updateAriaBuilder() {
+            const val = document.getElementById('aria-select').value;
+            const container = document.getElementById('aria-output-container');
+            const code = document.getElementById('aria-code');
+            const desc = document.getElementById('aria-desc');
+            
+            if(!val) { container.classList.add('hidden'); return; }
+            container.classList.remove('hidden');
+            
+            if(val === 'button') {
+                code.innerText = '<div role="button" tabindex="0" onclick="..." onkeydown="...">Button</div>';
+                desc.innerText = 'Adds semantic role and keyboard focus. Requires JS for Enter/Space key handling.';
+            } else if (val === 'alert') {
+                code.innerText = '<div role="alert">Error message...</div>';
+                desc.innerText = 'Immediate screen reader announcement without moving focus.';
+            } else if (val === 'modal') {
+                code.innerText = '<div role="dialog" aria-modal="true" aria-labelledby="modal-title">...</div>';
+                desc.innerText = 'Identifies the element as a modal dialog and traps focus within it.';
+            } else if (val === 'nav') {
+                code.innerText = '<nav aria-label="Main">...</nav>';
+                desc.innerText = 'Labels navigation landmarks for quick skipping.';
+            } else if (val === 'img') {
+                code.innerText = '<img src="..." alt="Chart" aria-describedby="desc-id" />\n<div id="desc-id" class="sr-only">Detailed chart description...</div>';
+                desc.innerText = 'Associates an image with a longer description text.';
+            }
+        }
+
+        // 4. PX to REM
+        function convertPxRem(source) {
+            const base = parseFloat(document.getElementById('base-size').value) || 16;
+            const pxIn = document.getElementById('input-px');
+            const remIn = document.getElementById('input-rem');
+            
+            if (source === 'px') {
+                const px = parseFloat(pxIn.value);
+                remIn.value = px ? (px / base).toFixed(3).replace(/\.?0+$/, '') : '';
+            } else if (source === 'rem') {
+                const rem = parseFloat(remIn.value);
+                pxIn.value = rem ? (rem * base).toFixed(1).replace(/\.?0+$/, '') : '';
+            }
+        }
+
+        // 5. Readability
+        function calcReadability() {
+            const text = document.getElementById('readability-input').value;
+            if(!text.trim()) {
+                document.getElementById('score-grade').innerText = '-';
+                document.getElementById('score-words').innerText = '0';
+                document.getElementById('score-sentences').innerText = '0';
+                return;
+            }
+            
+            const sentences = text.split(/[.!?]+/).filter(Boolean).length || 1;
+            const words = text.trim().split(/\s+/).length;
+            // Rough syllable count heuristic
+            const syllables = text.toLowerCase().split(/[^a-z]/).filter(Boolean).reduce((acc, word) => {
+                if(word.length <= 3) return acc + 1;
+                return acc + (word.match(/[aeiouy]{1,2}/g) || []).length;
+            }, 0);
+            
+            // Flesch-Kincaid Grade Level
+            const score = (0.39 * (words/sentences)) + (11.8 * (syllables/words)) - 15.59;
+            
+            document.getElementById('score-grade').innerText = score > 0 ? score.toFixed(1) : '< 1';
+            document.getElementById('score-words').innerText = words;
+            document.getElementById('score-sentences').innerText = sentences;
+        }
+
+        // 6. Target Size
+        function checkTarget() {
+            const w = document.getElementById('target-w').value;
+            const h = document.getElementById('target-h').value;
+            const preview = document.getElementById('target-preview');
+            const wcag = document.getElementById('res-wcag');
+            const mobile = document.getElementById('res-mobile');
+            
+            preview.style.width = w + 'px';
+            preview.style.height = h + 'px';
+            
+            if(w >= 24 && h >= 24) {
+                wcag.innerText = "PASS";
+                wcag.className = "font-black text-green-600";
+            } else {
+                wcag.innerText = "FAIL";
+                wcag.className = "font-black text-red-600";
+            }
+            
+            if(w >= 44 && h >= 44) {
+                mobile.innerText = "PASS";
+                mobile.className = "font-black text-green-600";
+            } else {
+                mobile.innerText = "FAIL";
+                mobile.className = "font-black text-red-600";
+            }
         }
     </script>
 </body>
