@@ -121,8 +121,13 @@
                      <div>
                          <label class="block font-bold mb-2 uppercase text-sm">Email Address</label>
                          <input type="email" id="notify-email" name="email" class="w-full p-3 border-2 border-black focus:outline-none focus:bg-[#f0f9ff] transition-colors" placeholder="you@company.com" required>
+                         <!-- Honeypot for spam protection -->
+                         <input type="text" name="_honey" style="display:none">
+                         <!-- Disable captcha for smoother testing -->
+                         <input type="hidden" name="_captcha" value="false">
+                         <input type="hidden" name="_subject" value="New Maintenance Notification Request">
                      </div>
-                     <button type="submit" class="w-full bg-black text-white p-4 font-bold uppercase hover:bg-[#4CA6FE] hover:text-black transition-colors border-2 border-black hover-lift">
+                     <button type="submit" id="submit-btn" class="w-full bg-black text-white p-4 font-bold uppercase hover:bg-[#4CA6FE] hover:text-black transition-colors border-2 border-black hover-lift">
                          Notify Me
                      </button>
                  </form>
@@ -151,10 +156,41 @@
 
         function handleNotify(e) {
             e.preventDefault();
-            // In a real scenario, this would POST to a backend service.
-            // For now, we simulate the UI state change as requested.
-            document.getElementById('form-container').classList.add('hidden');
-            document.getElementById('success-message').classList.remove('hidden');
+            
+            const email = document.getElementById('notify-email').value;
+            const btn = document.getElementById('submit-btn');
+            const originalText = btn.innerText;
+            
+            // UI Feedback
+            btn.innerText = 'Sending...';
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+
+            // Use FormSubmit's AJAX endpoint
+            fetch("https://formsubmit.co/ajax/cs.access@tuta.io", {
+                method: "POST",
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    _subject: "OpenAccessibility: Notify Me Request"
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('form-container').classList.add('hidden');
+                document.getElementById('success-message').classList.remove('hidden');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Something went wrong. Please try again later.");
+                // Reset button
+                btn.innerText = originalText;
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            });
         }
     </script>
 </body>
