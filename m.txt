@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAccessibility – Maintenance</title>
+    <meta name="description" content="We are currently undergoing scheduled maintenance.">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            /* Brutalist Design Tokens matching index.html */
+            --border-width: 2px;
+            --color-black: #080808;
+            --color-white: #ffffff;
+            --color-accent: #4CA6FE; /* OpenAccessibility Blue */
+            --color-body: #585858;
+            --color-bg-light: #f0f9ff;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-white);
+            color: var(--color-black);
+            overflow-x: hidden;
+        }
+
+        .border-thick {
+            border: var(--border-width) solid var(--color-black);
+        }
+
+        /* Interactive Elements */
+        .hover-lift {
+            transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+        }
+        .hover-lift:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 6px 6px 0px var(--color-black);
+        }
+
+        /* Abstract Patterns */
+        .pattern-grid {
+            background-image: radial-gradient(var(--color-black) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header / Navigation (Simplified for Maintenance) -->
+    <header class="px-6 py-4 flex justify-between items-center h-[80px] border-b-2 border-black bg-white z-10 relative">
+        <!-- Logo -->
+        <div class="flex items-center gap-3">
+            <img src="https://ddigrcfuoxzmmuqyezfg.supabase.co/storage/v1/object/public/I/logo.svg" 
+                 alt="OpenAccessibility Logo" 
+                 class="h-10 w-auto">
+            <div class="flex flex-col leading-none">
+                <span class="text-xl font-black tracking-tighter text-black uppercase">Open</span>
+                <span class="text-xl font-black tracking-tighter text-[#4CA6FE] uppercase">Accessibility</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col items-center justify-center relative p-6 space-y-8">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 pattern-grid opacity-20 z-0"></div>
+
+        <div class="bg-white border-thick p-8 md:p-12 max-w-2xl w-full relative z-10 shadow-[8px_8px_0px_#080808] text-center">
+            
+            <div class="w-20 h-20 bg-blue-50 border-thick rounded-full flex items-center justify-center mx-auto mb-8 text-[#4CA6FE]">
+                <i data-lucide="wrench" class="w-10 h-10"></i>
+            </div>
+
+            <h1 class="text-4xl md:text-5xl font-black mb-6 text-black">Under Maintenance</h1>
+            
+            <p class="text-lg md:text-xl text-[#585858] leading-relaxed mb-8">
+                OpenAccessibility is currently undergoing scheduled improvements to enhance your experience. We expect to be back online shortly.
+            </p>
+
+            <div class="bg-[#f0f9ff] border-thick p-6 mb-8 text-left">
+                <h2 class="font-bold text-lg mb-2 flex items-center gap-2">
+                    <i data-lucide="info" class="w-5 h-5 text-[#4CA6FE]"></i> Status Update
+                </h2>
+                <p class="text-sm text-[#585858]">
+                    We are deploying a new update for our WCAG audit tools. Estimated downtime: <strong>2 hours</strong>.
+                </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="mailto:cs.access@tuta.io" class="inline-block bg-black text-white px-8 py-4 font-bold uppercase hover:bg-[#4CA6FE] hover:text-black transition-colors border-2 border-black hover-lift">
+                    Contact Support
+                </a>
+            </div>
+
+            <div class="mt-8 text-sm text-[#585858]">
+                <p>Urgent inquiry? Email us at <a href="mailto:cs.access@tuta.io" class="underline hover:text-[#4CA6FE] font-bold">cs.access@tuta.io</a></p>
+            </div>
+        </div>
+
+        <!-- Contact Form Section -->
+        <div class="bg-white border-thick p-8 md:p-10 max-w-2xl w-full relative z-10">
+             <div id="form-container">
+                 <div class="flex items-center gap-4 mb-6 justify-center">
+                     <i data-lucide="bell" class="w-8 h-8 text-[#4CA6FE]"></i>
+                     <h2 class="text-2xl font-black uppercase text-center">Get Notified</h2>
+                 </div>
+                 <p class="text-center text-[#585858] mb-6">Leave your email and we'll notify you as soon as we're back online.</p>
+                 
+                 <form onsubmit="handleNotify(event)" class="space-y-4">
+                     <div>
+                         <label class="block font-bold mb-2 uppercase text-sm">Email Address</label>
+                         <input type="email" id="notify-email" name="email" class="w-full p-3 border-2 border-black focus:outline-none focus:bg-[#f0f9ff] transition-colors" placeholder="you@company.com" required>
+                         <!-- Honeypot for spam protection -->
+                         <input type="text" name="_honey" style="display:none">
+                         <!-- Disable captcha for smoother testing -->
+                         <input type="hidden" name="_captcha" value="false">
+                         <input type="hidden" name="_subject" value="New Maintenance Notification Request">
+                     </div>
+                     <button type="submit" id="submit-btn" class="w-full bg-black text-white p-4 font-bold uppercase hover:bg-[#4CA6FE] hover:text-black transition-colors border-2 border-black hover-lift">
+                         Notify Me
+                     </button>
+                 </form>
+             </div>
+
+             <!-- Success State (Hidden by default) -->
+             <div id="success-message" class="hidden text-center py-8">
+                 <div class="w-16 h-16 bg-green-100 border-thick rounded-full flex items-center justify-center mx-auto mb-6 text-green-600">
+                     <i data-lucide="check" class="w-8 h-8"></i>
+                 </div>
+                 <h2 class="text-2xl font-black uppercase mb-4">Thank You!</h2>
+                 <p class="text-[#585858] mb-2">We have received your request.</p>
+                 <p class="text-sm text-gray-400">Submission sent to: <strong>cs.access@tuta.io</strong></p>
+             </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t-2 border-black bg-white py-6 px-6 text-center relative z-10">
+        <p class="text-sm font-mono text-[#585858]">© 2026 OpenAccessibility. All rights reserved.</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        function handleNotify(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('notify-email').value;
+            const btn = document.getElementById('submit-btn');
+            const originalText = btn.innerText;
+            
+            // UI Feedback
+            btn.innerText = 'Sending...';
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+
+            // Use FormSubmit's AJAX endpoint
+            fetch("https://formsubmit.co/ajax/cs.access@tuta.io", {
+                method: "POST",
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    _subject: "OpenAccessibility: Notify Me Request"
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('form-container').classList.add('hidden');
+                document.getElementById('success-message').classList.remove('hidden');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Something went wrong. Please try again later.");
+                // Reset button
+                btn.innerText = originalText;
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            });
+        }
+    </script>
+</body>
+</html>
