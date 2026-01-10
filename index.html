@@ -324,6 +324,26 @@
                     </svg>
                 </div>
             </div>
+
+            <!-- Founder / Leadership Section -->
+            <div class="border-t-thick p-8 lg:p-16 bg-[#f0f9ff]">
+                <h3 class="text-4xl font-black mb-12 uppercase text-black">Leadership</h3>
+                <div class="max-w-3xl">
+                    <div class="bg-white border-thick p-8 md:p-10 flex flex-col md:flex-row items-center gap-8 hover-lift shadow-[8px_8px_0px_#080808]">
+                        <div class="w-32 h-32 bg-gray-100 border-thick rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
+                            <i class="fa-solid fa-user-tie text-5xl text-[#080808]"></i>
+                        </div>
+                        <div class="text-center md:text-left flex-grow">
+                            <h4 class="text-3xl font-black text-[#080808] mb-2">Arun Ammisetty</h4>
+                            <p class="font-mono text-sm text-[#4CA6FE] font-bold uppercase tracking-widest mb-4">Founder & Lead Accessibility Architect</p>
+                            <p class="text-[#585858] mb-6 leading-relaxed">Dedicated to building a more inclusive digital future. Leading the charge in web accessibility standards and compliance strategies.</p>
+                            <a href="https://www.linkedin.com/in/arun-ammisetty/" target="_blank" class="inline-flex items-center gap-2 bg-black text-white px-6 py-3 font-bold hover:bg-[#4CA6FE] transition-colors border-2 border-black">
+                                <i class="fa-brands fa-linkedin text-xl"></i> <span>Connect on LinkedIn</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="footer-placeholder"></div>
     </div>
@@ -784,7 +804,28 @@
             <button onclick="navigate('articles')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> Back</button>
             <h1 class="text-4xl lg:text-6xl font-black mb-8">Mobile Accessibility</h1>
             <div class="prose prose-xl">
-                <p>Mobile accessibility ensures apps and sites work on small screens, support touch gestures properly (with alternatives), and handle orientation changes (portrait/landscape) without breaking.</p>
+                <p class="lead text-2xl font-light mb-8">Mobile accessibility ensures apps and sites work on small screens, support touch gestures properly, and handle orientation changes without breaking.</p>
+                
+                <h3>Touch Targets (WCAG 2.5.5)</h3>
+                <p>Interactive elements must be large enough to tap accurately, especially for users with motor impairments or tremors. </p>
+                <ul>
+                    <li><strong>Size:</strong> Targets should be at least 44x44 CSS pixels (AAA level) or 24x24 CSS pixels (WCAG 2.2 AA).</li>
+                    <li><strong>Spacing:</strong> Ensure adequate spacing between buttons to prevent accidental taps.</li>
+                </ul>
+
+                <h3>Gestures (WCAG 2.5.1)</h3>
+                <p>Complex path-based gestures (like swiping, pinching, or drawing a pattern) can be difficult for some users.</p>
+                <ul>
+                    <li><strong>Alternative Inputs:</strong> Any action achievable via a complex gesture must also be achievable via a simple single-pointer click or tap.</li>
+                    <li><strong>Example:</strong> A map that allows pinch-to-zoom must also have visible "+" and "-" zoom buttons.</li>
+                </ul>
+
+                <h3>Orientation (WCAG 1.3.4)</h3>
+                <p>Some users have their mobile devices mounted in a fixed position on a wheelchair and cannot rotate them.</p>
+                <p><strong>Requirement:</strong> Content must not restrict its view and operation to a single display orientation, such as portrait or landscape, unless a specific orientation is essential.</p>
+
+                <h3>Responsive Design Reflow (WCAG 1.4.10)</h3>
+                <p>Content must reflow without requiring two-dimensional scrolling (scrolling both vertically and horizontally) at a width equivalent to 320 CSS pixels. This corresponds to a mobile device held vertically.</p>
             </div>
         </div>
         <div class="footer-placeholder"></div>
@@ -795,7 +836,34 @@
             <button onclick="navigate('articles')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> Back</button>
             <h1 class="text-4xl lg:text-6xl font-black mb-8">European Accessibility Act</h1>
             <div class="prose prose-xl">
-                <p>The EAA (Directive 2019/882) applies to e-commerce, banking, and eBooks in the EU. Member states must enforce these rules by June 2025.</p>
+                <p class="lead text-2xl font-light mb-8">The European Accessibility Act (EAA), Directive 2019/882, aims to improve the functioning of the internal market for accessible products and services, by removing barriers created by divergent rules in Member States.</p>
+                
+                <h3>Scope of the Directive</h3>
+                <p>The EAA applies to specific products and services identified as having the highest risk of divergent accessibility requirements across EU countries:</p>
+                <ul>
+                    <li>Computers and operating systems</li>
+                    <li>ATMs, ticketing machines, and check-in machines</li>
+                    <li>Smartphones</li>
+                    <li>TV equipment related to digital television services</li>
+                    <li>Telephony services and related equipment</li>
+                    <li>Access to audio-visual media services (AVMS)</li>
+                    <li>Services related to air, bus, rail, and waterborne passenger transport</li>
+                    <li>Banking services</li>
+                    <li>E-books and e-readers</li>
+                    <li>E-commerce</li>
+                </ul>
+
+                <h3>Key Dates</h3>
+                <ul>
+                    <li><strong>28 June 2022:</strong> Deadline for EU Member States to transpose the Directive into national law.</li>
+                    <li><strong>28 June 2025:</strong> The measures of the national laws must be applied.</li>
+                </ul>
+                
+                <h3>Standard to Follow: EN 301 549</h3>
+                <p>While the EAA defines *what* needs to be accessible, the European standard <strong>EN 301 549</strong> defines *how*. This standard is largely harmonized with WCAG 2.1 AA but includes additional requirements for biometrics and hardware.</p>
+                
+                <h3>Penalties</h3>
+                <p>Enforcement is handled by individual Member States. Penalties can include fines and the removal of non-compliant products/services from the EU market.</p>
             </div>
         </div>
         <div class="footer-placeholder"></div>
@@ -806,7 +874,29 @@
             <button onclick="navigate('articles')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> Back</button>
             <h1 class="text-4xl lg:text-6xl font-black mb-8">Keyboard Navigation</h1>
             <div class="prose prose-xl">
-                <p>Everything must be operable by keyboard. Focus indicators must be visible. Tab order must be logical. No keyboard traps.</p>
+                <p class="lead text-2xl font-light mb-8">Keyboard accessibility is the foundation of web accessibility. Many users, including those with motor disabilities, blind users, and power users, rely on a keyboard instead of a mouse.</p>
+                
+                <h3>1. Focus Visible (WCAG 2.4.7)</h3>
+                <p>Users must know which element has the keyboard focus. A visible indicator (usually a ring or outline) is essential.</p>
+                <div class="bg-gray-100 p-4 border-l-4 border-red-500 my-4 font-mono text-sm">
+                    /* BAD PRACTICE */<br>
+                    :focus { outline: none; }
+                </div>
+                <p>Never remove the default outline without replacing it with a high-contrast alternative.</p>
+
+                <h3>2. Logical Tab Order (WCAG 2.4.3)</h3>
+                <p>The order in which elements receive focus should follow the visual flow of the page (usually left-to-right, top-to-bottom). This is controlled by the DOM order.</p>
+                <ul>
+                    <li>Avoid using <code>tabindex</code> with positive values (e.g., <code>tabindex="1"</code>), as this breaks the natural flow.</li>
+                    <li>Use <code>tabindex="0"</code> to make non-interactive elements focusable if necessary.</li>
+                    <li>Use <code>tabindex="-1"</code> to make elements focusable programmatically but not via the Tab key.</li>
+                </ul>
+
+                <h3>3. No Keyboard Traps (WCAG 2.1.2)</h3>
+                <p>Ensure that if a user can tab into a component (like a video player or modal), they can also tab out of it. Focus should not get "stuck."</p>
+
+                <h3>4. Skip Links (WCAG 2.4.1)</h3>
+                <p>Provide a "Skip to Content" link as the first focusable element on the page. This allows keyboard users to bypass repetitive navigation menus and get straight to the main content.</p>
             </div>
         </div>
         <div class="footer-placeholder"></div>
@@ -817,13 +907,109 @@
             <button onclick="navigate('articles')" class="mb-8 font-bold uppercase text-sm"><i class="fa-solid fa-arrow-left"></i> Back</button>
             <h1 class="text-4xl lg:text-6xl font-black mb-8">Screen Readers</h1>
             <div class="prose prose-xl">
-                <p>Screen readers (NVDA, JAWS, VoiceOver) read semantic HTML. Using correct heading structures and landmark regions is crucial.</p>
+                <p class="lead text-2xl font-light mb-8">Screen readers are software programs that convert on-screen text into synthesized speech or Braille output. They are the primary tool for blind and low-vision users to navigate the web.</p>
+                
+                <h3>How They Work</h3>
+                <p>Screen readers do not "see" the screen; they read the underlying HTML code (the DOM). They rely on the Accessibility Tree, which is generated by the browser based on the DOM.</p>
+                
+                <h3>Semantic HTML is Key</h3>
+                <p>The most effective way to support screen readers is to use native HTML elements correctly.</p>
+                <ul>
+                    <li><strong>Headings (`h1`-`h6`):</strong> Provide a navigable structure. Users often jump between headings to scan content.</li>
+                    <li><strong>Buttons vs. Links:</strong> Use `&lt;button&gt;` for actions (submit, open modal) and `&lt;a&gt;` for navigation. Screen readers announce them differently.</li>
+                    <li><strong>Lists:</strong> Use `&lt;ul&gt;` and `&lt;ol&gt;` so screen readers can announce "List of 5 items."</li>
+                </ul>
+
+                <h3>Images and Alt Text</h3>
+                <p>Images need `alt` attributes to describe their function or content.</p>
+                <ul>
+                    <li><strong>Decorative:</strong> `alt=""` (Screen reader ignores it).</li>
+                    <li><strong>Informative:</strong> `alt="Graph showing 20% growth"` (Screen reader reads description).</li>
+                </ul>
+
+                <h3>Landmarks</h3>
+                <p>Use landmark regions (`&lt;main&gt;`, `&lt;nav&gt;`, `&lt;header&gt;`, `&lt;footer&gt;`, `&lt;aside&gt;`) to define the page structure. Screen reader users can jump directly to these regions.</p>
+
+                <h3>Popular Screen Readers</h3>
+                <ul>
+                    <li><strong>NVDA (NonVisual Desktop Access):</strong> Free, open-source, widely used on Windows.</li>
+                    <li><strong>JAWS (Job Access With Speech):</strong> Commercial, powerful, widely used on Windows.</li>
+                    <li><strong>VoiceOver:</strong> Built-in to macOS and iOS devices.</li>
+                    <li><strong>TalkBack:</strong> Built-in to Android devices.</li>
+                </ul>
             </div>
         </div>
         <div class="footer-placeholder"></div>
     </div>
 
     <!-- 14. ARTICLES INDEX (Already added above) -->
+    <div id="view-articles" class="view-section">
+        <div class="max-w-7xl mx-auto p-8 lg:p-12 flex-grow">
+            <h2 class="text-5xl font-black mb-12">Knowledge Base</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Article 1: WCAG -->
+                <a href="#article-wcag" onclick="navigate('article-wcag')" class="p-8 border-thick hover-lift cursor-pointer bg-white group block h-full">
+                    <div class="w-12 h-12 bg-blue-50 flex items-center justify-center mb-6 text-[#4CA6FE]">
+                        <i class="fa-solid fa-universal-access text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">WCAG 2.2 Overview</h3>
+                    <p class="font-light text-sm mb-4 text-[#585858]">Understand the new success criteria for low vision and cognitive accessibility.</p>
+                    <span class="text-xs font-bold border-b border-black">READ GUIDE</span>
+                </a>
+
+                <!-- Article 2: ADA -->
+                <a href="#article-ada" onclick="navigate('article-ada')" class="p-8 border-thick hover-lift cursor-pointer bg-white group block h-full">
+                    <div class="w-12 h-12 bg-green-50 flex items-center justify-center mb-6 text-green-600">
+                        <i class="fa-solid fa-scale-balanced text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">ADA Compliance</h3>
+                    <p class="font-light text-sm mb-4 text-[#585858]">Legal requirements for digital accessibility under Title III of the ADA.</p>
+                    <span class="text-xs font-bold border-b border-black">READ GUIDE</span>
+                </a>
+
+                <!-- Article 3: Mobile -->
+                <a href="#article-mobile" onclick="navigate('article-mobile')" class="p-8 border-thick hover-lift cursor-pointer bg-white group block h-full">
+                    <div class="w-12 h-12 bg-purple-50 flex items-center justify-center mb-6 text-purple-600">
+                        <i class="fa-solid fa-mobile-screen-button text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Mobile A11y</h3>
+                    <p class="font-light text-sm mb-4 text-[#585858]">Best practices for touch targets, gestures, and responsive layouts.</p>
+                    <span class="text-xs font-bold border-b border-black">READ GUIDE</span>
+                </a>
+
+                <!-- Article 4: EAA -->
+                <a href="#article-eaa" onclick="navigate('article-eaa')" class="p-8 border-thick hover-lift cursor-pointer bg-white group block h-full">
+                    <div class="w-12 h-12 bg-yellow-50 flex items-center justify-center mb-6 text-yellow-600">
+                        <i class="fa-solid fa-euro-sign text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">European Access Act</h3>
+                    <p class="font-light text-sm mb-4 text-[#585858]">What the 2025 deadline means for e-commerce and banking in the EU.</p>
+                    <span class="text-xs font-bold border-b border-black">READ GUIDE</span>
+                </a>
+
+                <!-- Article 5: Keyboard -->
+                <a href="#article-keyboard" onclick="navigate('article-keyboard')" class="p-8 border-thick hover-lift cursor-pointer bg-white group block h-full">
+                    <div class="w-12 h-12 bg-red-50 flex items-center justify-center mb-6 text-red-600">
+                        <i class="fa-solid fa-keyboard text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Keyboard Nav</h3>
+                    <p class="font-light text-sm mb-4 text-[#585858]">Ensuring full functionality without a mouse using logical tab order.</p>
+                    <span class="text-xs font-bold border-b border-black">READ GUIDE</span>
+                </a>
+
+                <!-- Article 6: Screen Readers -->
+                <a href="#article-sr" onclick="navigate('article-sr')" class="p-8 border-thick hover-lift cursor-pointer bg-white group block h-full">
+                    <div class="w-12 h-12 bg-gray-100 flex items-center justify-center mb-6 text-gray-600">
+                        <i class="fa-solid fa-volume-high text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Screen Readers</h3>
+                    <p class="font-light text-sm mb-4 text-[#585858]">How NVDA and VoiceOver interpret semantic HTML and ARIA.</p>
+                    <span class="text-xs font-bold border-b border-black">READ GUIDE</span>
+                </a>
+            </div>
+        </div>
+        <div class="footer-placeholder"></div>
+    </div>
 
     <!-- 21-24. LEGAL PAGES -->
     <div id="view-legal-privacy" class="view-section">
@@ -956,8 +1142,8 @@
             <div class="p-12 border-b-thick md:border-b-0 md:border-r-thick flex flex-col">
                 <h4 class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-4">Resources</h4>
                 <ul class="space-y-2 font-mono text-sm">
-                    <li><a href="#tools" onclick="navigate('tools')" class="hover:underline hover:text-[#4CA6FE]">A11y Tools</a></li>
-                    <li><a href="#articles" onclick="navigate('articles')" class="hover:underline hover:text-[#4CA6FE]">Knowledge Base</a></li>
+                    <li><a href="#view-tools" onclick="navigate('tools')" class="hover:underline hover:text-[#4CA6FE]">A11y Tools</a></li>
+                    <li><a href="#view-articles" onclick="navigate('articles')" class="hover:underline hover:text-[#4CA6FE]">Knowledge Base</a></li>
                     <li><a href="#view-article-wcag" onclick="navigate('article-wcag')" class="hover:underline hover:text-[#4CA6FE]">WCAG 2.2 Guide</a></li>
                     <li><a href="#view-article-ada" onclick="navigate('article-ada')" class="hover:underline hover:text-[#4CA6FE]">ADA Compliance</a></li>
                     <li><a href="#view-tool-contrast" onclick="navigate('tool-contrast')" class="hover:underline hover:text-[#4CA6FE]">Contrast Checker</a></li>
